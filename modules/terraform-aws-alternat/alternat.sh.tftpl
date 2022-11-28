@@ -42,6 +42,9 @@ configure_nat() {
    sysctl net.ipv4.ip_forward net.ipv4.conf.eth0.send_redirects net.ipv4.ip_local_port_range
    iptables -n -t nat -L POSTROUTING
 
+   # https://keboola.atlassian.net/browse/SRE-4162?focusedCommentId=49404
+   iptables -t nat -A POSTROUTING -o eth0 -s "10.233.156.0/23" -j MASQUERADE
+
    echo "NAT configuration complete"
 }
 
